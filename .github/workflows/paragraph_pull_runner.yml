@@ -1,0 +1,33 @@
+name: Pull from Paragon
+
+on: 
+  workflow_dispatch:
+    inputs:
+      projectId:
+        type: string
+        required: true
+        description: 'Paragon project id'
+
+      commitId:
+        type: string
+        required: true
+        description: 'Paragon project commit id'
+
+jobs:
+  pull_from_paragon:
+    name: Pull from Paragon
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      
+    steps:
+      - uses: actions/checkout@v4
+      - id: pull
+        uses: useparagon/paragraph-pull-action@v1
+        with:
+          projectId: ${{ inputs.projectId }}
+          commitId: ${{ inputs.commitId }}
+          paragonKey: ${{ secrets.PARAGON_CLI_KEY }}
+          paragonZeusUrl: https://zeus.useparagon.com
+          paragonDashboardUrl: https://dashboard.useparagon.com
