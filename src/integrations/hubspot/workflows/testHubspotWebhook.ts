@@ -55,7 +55,6 @@ export default class extends Workflow<
       description: 'Output',
       code: function yourFunction(parameters, libraries) {
         console.log('Ouptut!');
-
         return parameters.first_name + ' ' + parameters.last_name;
       },
       parameters: {

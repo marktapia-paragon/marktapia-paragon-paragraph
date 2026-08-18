@@ -45,9 +45,7 @@ export default class extends Workflow<
     context: IContext<InputResultMap>,
     connectUser: IConnectUser<IPersona<typeof personaMeta>>,
   ) {
-    const triggerStep = integration.triggers.channelMessagePosted({
-      objectMapping: ``,
-    });
+    const triggerStep = integration.triggers.channelMessagePosted({});
 
     const userCheckStep = new ConditionalStep({
       if: Operators.And(
@@ -65,10 +63,10 @@ export default class extends Workflow<
 
     const copyCommentStep = integration.actions.sendMessage(
       {
-        channel: `C0BFGTUAD7X`,
+        channel: 'C0BFGTUAD7X',
         message: `${triggerStep.output.result.text}`,
-        botName: ``,
-        botIcon: `:cat:`,
+        botName: '',
+        botIcon: ':cat:',
       },
       {
         autoRetry: false,
@@ -77,17 +75,18 @@ export default class extends Workflow<
       },
     );
 
-    const actionStep = undefined;
-
-    const mapStep = new FanOutStep({
-      description: 'description',
-      iterator: [],
-    });
+    const actionStep = integration.actions.getUserByEmail(
+      { email: 'mark.tapia@useparagon.com' },
+      {
+        autoRetry: false,
+        continueWorkflowOnError: false,
+        description: 'description',
+      },
+    );
 
     triggerStep
       .nextStep(userCheckStep.whenTrue(copyCommentStep))
-      .nextStep(actionStep)
-      .nextStep(mapStep);
+      .nextStep(actionStep);
 
     /**
      * Pass all steps used in the workflow to the `.register()`
@@ -98,7 +97,6 @@ export default class extends Workflow<
       userCheckStep,
       copyCommentStep,
       actionStep,
-      mapStep,
     });
   }
 

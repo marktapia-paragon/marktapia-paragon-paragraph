@@ -49,7 +49,7 @@ export default class extends Workflow<
 
     const mapStep = new FanOutStep({
       description: 'description',
-      iterator: [],
+      iterator: Operators.Or(),
     });
 
     const functionStep = new FunctionStep({
