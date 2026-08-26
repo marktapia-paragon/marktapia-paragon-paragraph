@@ -50,7 +50,14 @@ export default class extends Workflow<
       timezone: 'America/Los_Angeles',
     });
 
-    const actionStep = undefined;
+    const actionStep = integration.actions.getAccountById(
+      { recordType: 'account', accountId: `6223` },
+      {
+        autoRetry: false,
+        continueWorkflowOnError: false,
+        description: 'description',
+      },
+    );
 
     triggerStep.nextStep(actionStep);
 
