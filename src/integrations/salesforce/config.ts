@@ -1,6 +1,7 @@
 import { IIntegrationConfig } from '@useparagon/core/integration';
 
 import { default as GetContacts } from './workflows/getContacts';
+import { default as NewWorkflow } from './workflows/newWorkflow';
 
 /**
  * configuration for a salesforce
@@ -15,7 +16,7 @@ Our Salesforce integration enables you to:
 • Sync records from Salesforce  
 • Receive updates when a record in Salesforce is created or updated`,
   showWatermark: false,
-  workflowDisplayOrder: [GetContacts],
+  workflowDisplayOrder: [GetContacts, NewWorkflow],
 };
 
 export default config;
