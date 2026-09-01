@@ -52,18 +52,39 @@ export default class extends Workflow<
 
     const functionStep = new FunctionStep({
       autoRetry: false,
-      description: 'description',
-      code: function yourFunction(parameters, libraries) {},
+      description: 'Random Number Generator',
+      code: function yourFunction(parameters, libraries) {
+        return Math.ceil(Math.random() * 30); // 1–30s
+      },
       parameters: {},
     });
 
-    triggerStep.nextStep(functionStep);
+    const delayStep = new DelayStep({
+      unit: 'SECONDS',
+      value: functionStep.output.result,
+      description: 'description',
+    });
+
+    const requestStep = new RequestStep({
+      autoRetry: false,
+      continueWorkflowOnError: false,
+      description: 'description',
+      url: `https://example.com`,
+      method: 'GET',
+      params: {},
+      headers: {},
+    });
+
+    triggerStep
+      .nextStep(functionStep)
+      .nextStep(delayStep)
+      .nextStep(requestStep);
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep, functionStep });
+    return this.register({ triggerStep, functionStep, delayStep, requestStep });
   }
 
   /**

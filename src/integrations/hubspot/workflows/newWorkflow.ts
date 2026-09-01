@@ -28,7 +28,6 @@ import {
 
 import personaMeta from '../../../persona.meta';
 import sharedInputs from '../inputs';
-import ContactFirstNameUpdated from '../triggers/contactFirstNameUpdated';
 
 /**
  * New Workflow Workflow implementation
@@ -46,24 +45,18 @@ export default class extends Workflow<
     context: IContext<InputResultMap>,
     connectUser: IConnectUser<IPersona<typeof personaMeta>>,
   ) {
-    const triggerStep = new CustomTriggerStep(ContactFirstNameUpdated);
-
-    const functionStep = new FunctionStep({
-      autoRetry: false,
-      description: 'description',
-      code: function yourFunction(parameters, libraries) {
-        return 'Fired!';
-      },
-      parameters: {},
+    const triggerStep = integration.triggers.recordCreated({
+      filterFormula: undefined,
+      recordType: 'companies',
     });
 
-    triggerStep.nextStep(functionStep);
+    triggerStep;
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep, functionStep });
+    return this.register({ triggerStep });
   }
 
   /**
@@ -111,5 +104,5 @@ export default class extends Workflow<
   /**
    * This property is maintained by Paragon. Do not edit this property.
    */
-  readonly id: string = '7ea24c73-91af-4df0-92a9-a052a69abd30';
+  readonly id: string = '82af8e3c-b5a2-49fc-a11a-bd74bfd12f88';
 }
