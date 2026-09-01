@@ -30,7 +30,7 @@ import personaMeta from '../../../persona.meta';
 import sharedInputs from '../inputs';
 
 /**
- * New Workflow Workflow implementation
+ * Webhook with Jitter Step Workflow implementation
  */
 export default class extends Workflow<
   ISalesforceIntegration,
@@ -65,32 +65,19 @@ export default class extends Workflow<
       description: 'description',
     });
 
-    const requestStep = new RequestStep({
-      autoRetry: false,
-      continueWorkflowOnError: false,
-      description: 'description',
-      url: `https://example.com`,
-      method: 'GET',
-      params: {},
-      headers: {},
-    });
-
-    triggerStep
-      .nextStep(functionStep)
-      .nextStep(delayStep)
-      .nextStep(requestStep);
+    triggerStep.nextStep(functionStep).nextStep(delayStep);
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep, functionStep, delayStep, requestStep });
+    return this.register({ triggerStep, functionStep, delayStep });
   }
 
   /**
    * The name of the workflow, used in the Dashboard and Connect Portal.
    */
-  name: string = 'New Workflow';
+  name: string = 'Webhook with Jitter Step';
 
   /**
    * A user-facing description of the workflow shown in the Connect Portal.
