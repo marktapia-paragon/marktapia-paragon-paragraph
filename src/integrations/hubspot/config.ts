@@ -4,6 +4,7 @@ import { default as NewWorkflow_1 } from './workflows/newWorkflow_1';
 import { default as NewWorkflow } from './workflows/newWorkflow';
 import { default as TestCompanyCreated } from './workflows/testCompanyCreated';
 import { default as TestHubspotWebhook } from './workflows/testHubspotWebhook';
+import { default as TestJsonPayload } from './workflows/testJsonPayload';
 
 /**
  * configuration for a hubspot
@@ -25,6 +26,7 @@ Our HubSpot integration enables you to:
     NewWorkflow,
     TestCompanyCreated,
     TestHubspotWebhook,
+    TestJsonPayload,
   ],
 };
 

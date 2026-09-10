@@ -23,17 +23,17 @@ import { IConnectUser, IPermissionContext } from '@useparagon/core/user';
 import {
   createInputs,
   InputResultMap,
-  ISalesforceIntegration,
-} from '@useparagon/integrations/salesforce';
+  IHubspotIntegration,
+} from '@useparagon/integrations/hubspot';
 
 import personaMeta from '../../../persona.meta';
 import sharedInputs from '../inputs';
 
 /**
- * Webhook with Jitter Step Workflow implementation
+ * Test JSON Payload Workflow implementation
  */
 export default class extends Workflow<
-  ISalesforceIntegration,
+  IHubspotIntegration,
   IPersona<typeof personaMeta>,
   InputResultMap
 > {
@@ -41,56 +41,28 @@ export default class extends Workflow<
    * Define workflow steps and orchestration.
    */
   define(
-    integration: ISalesforceIntegration,
+    integration: IHubspotIntegration,
     context: IContext<InputResultMap>,
     connectUser: IConnectUser<IPersona<typeof personaMeta>>,
   ) {
     const triggerStep = integration.triggers.recordCreated({
-      recordsFilterFormula: undefined,
-      recordType: 'Contact',
+      filterFormula: undefined,
+      recordType: 'deals',
     });
 
-    const functionStep = new FunctionStep({
-      autoRetry: false,
-      description: 'Random Number Generator',
-      code: function yourFunction(parameters, libraries) {
-        return Math.ceil(Math.random() * 30); // 1–30s
-      },
-      parameters: {},
-    });
-
-    const delayStep = new DelayStep({
-      unit: 'SECONDS',
-      value: functionStep.output.result,
-      description: 'description',
-    });
-
-    const coraApiStep = new RequestStep({
-      autoRetry: false,
-      continueWorkflowOnError: false,
-      description: 'Cora API',
-      url: `https://example.com`,
-      method: 'GET',
-      params: {},
-      headers: {},
-    });
-
-    triggerStep
-      .nextStep(functionStep)
-      .nextStep(delayStep)
-      .nextStep(coraApiStep);
+    triggerStep;
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep, functionStep, delayStep, coraApiStep });
+    return this.register({ triggerStep });
   }
 
   /**
    * The name of the workflow, used in the Dashboard and Connect Portal.
    */
-  name: string = 'Webhook with Jitter Step';
+  name: string = 'Test JSON Payload';
 
   /**
    * A user-facing description of the workflow shown in the Connect Portal.
@@ -132,5 +104,5 @@ export default class extends Workflow<
   /**
    * This property is maintained by Paragon. Do not edit this property.
    */
-  readonly id: string = 'ee07ab21-b9f9-485f-b5b3-7ff8eadc9dc7';
+  readonly id: string = 'd52cba70-1211-440b-a486-02abdb161e5f';
 }
