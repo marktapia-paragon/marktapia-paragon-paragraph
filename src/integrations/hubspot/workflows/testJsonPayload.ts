@@ -47,16 +47,25 @@ export default class extends Workflow<
   ) {
     const triggerStep = integration.triggers.recordCreated({
       filterFormula: undefined,
-      recordType: 'deals',
+      recordType: 'contacts',
     });
 
-    triggerStep;
+    const functionStep = new FunctionStep({
+      autoRetry: true,
+      description: 'description',
+      code: function yourFunction(parameters, libraries) {
+        return 'Hello, World!';
+      },
+      parameters: {},
+    });
+
+    triggerStep.nextStep(functionStep);
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep });
+    return this.register({ triggerStep, functionStep });
   }
 
   /**
