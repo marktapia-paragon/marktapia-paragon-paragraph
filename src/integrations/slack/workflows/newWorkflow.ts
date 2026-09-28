@@ -45,7 +45,7 @@ export default class extends Workflow<
     context: IContext<InputResultMap>,
     connectUser: IConnectUser<IPersona<typeof personaMeta>>,
   ) {
-    const triggerStep = integration.triggers.directMessageCreated({
+    const triggerStep = integration.triggers.channelMessagePosted({
       objectMapping: ``,
     });
 
@@ -87,7 +87,11 @@ export default class extends Workflow<
     });
 
     const actionStep = integration.actions.sendMessage(
-      {},
+      {
+        channel: `${functionStep.output.result.channel.id}`,
+        message: `Received a DM!`,
+        botName: ``,
+      },
       {
         autoRetry: false,
         continueWorkflowOnError: false,
