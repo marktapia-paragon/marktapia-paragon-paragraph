@@ -2,6 +2,7 @@ import { IIntegrationConfig } from '@useparagon/core/integration';
 
 import { default as TestingAppEvent } from './workflows/testingAppEvent';
 import { default as TestSlack } from './workflows/testSlack';
+import { default as NewWorkflow } from './workflows/newWorkflow';
 
 /**
  * configuration for a slack
@@ -17,7 +18,7 @@ Our Slack integration enables you to:
 • Receive alerts and notifications in your Slack workspace
 • Notify or DM specific team members based on certain activity`,
   showWatermark: false,
-  workflowDisplayOrder: [TestingAppEvent, TestSlack],
+  workflowDisplayOrder: [TestingAppEvent, TestSlack, NewWorkflow],
 };
 
 export default config;
