@@ -30,7 +30,7 @@ import personaMeta from '../../../persona.meta';
 import sharedInputs from '../inputs';
 
 /**
- * New Workflow Workflow implementation
+ * Mock Test Events Workflow implementation
  */
 export default class extends Workflow<
   ISlackIntegration,
@@ -53,7 +53,7 @@ export default class extends Workflow<
       autoRetry: false,
       description: 'description',
       code: function yourFunction(parameters, libraries) {
-        myPayload = {
+        var myPayload = {
           result: {
             channel: {
               context_team_id: 'TM7FL705V',
@@ -111,7 +111,7 @@ export default class extends Workflow<
   /**
    * The name of the workflow, used in the Dashboard and Connect Portal.
    */
-  name: string = 'New Workflow';
+  name: string = 'Mock Test Events';
 
   /**
    * A user-facing description of the workflow shown in the Connect Portal.
