@@ -49,38 +49,44 @@ export default class extends Workflow<
       objectMapping: ``,
     });
 
-    const functionStep = new FunctionStep({
+    const mockPayloadStep = new FunctionStep({
       autoRetry: false,
-      description: 'description',
+      description: 'Mock Payload',
       code: function yourFunction(parameters, libraries) {
         var myPayload = {
-          result: {
-            channel: {
-              context_team_id: 'TM7FL705V',
-              created: 1682576941,
-              creator: 'U02T23UL0R1',
-              id: 'C0553690LQM',
-              is_archived: false,
-              is_channel: true,
-              is_frozen: false,
-              is_im: true,
-              is_open: false,
-              is_org_shared: false,
-              is_shared: false,
-              last_read: '0000000000.000000',
-              latest: null,
-              name: 'test-webhook',
-              name_normalized: 'test-webhook',
-              unread_count: 0,
-              unread_count_display: 0,
-              updated: 1764319159873,
-              user: 'mock-user-id',
+          ts: '1682576941.441499',
+          team: 'mock-team-id',
+          text: '<@U02T23UL0R1> has joined the channel',
+          type: 'message',
+          user: 'U02T23UL0R1',
+          files: [],
+          blocks: [
+            {
+              type: 'rich_text',
+              block_id: 'mock-block-id',
+              elements: [
+                {
+                  type: 'rich_text_section',
+                  elements: [
+                    {
+                      text: 'mock-text',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
             },
-            event_ts: '1682576941.441499',
-            type: 'im_created',
-            user: 'mock-user-id',
-          },
+          ],
+          upload: false,
+          channel: 'C0C4YA6AMM1',
+          subtype: 'channel_join',
+          event_ts: '1682576941.441499',
+          channel_type: 'channel',
+          client_msg_id: 'mock-client-msg-id',
+          event_context: 'mock-event-context',
+          display_as_bot: false,
         };
+
         return parameters.payload;
       },
       parameters: { payload: triggerStep.output.result },
@@ -88,24 +94,24 @@ export default class extends Workflow<
 
     const actionStep = integration.actions.sendMessage(
       {
-        channel: `${functionStep.output.result.channel.id}`,
+        channel: `${mockPayloadStep.output.result.channel}`,
         message: `Received a DM!`,
         botName: ``,
       },
       {
         autoRetry: false,
         continueWorkflowOnError: false,
-        description: 'description',
+        description: 'Send Message to Channel',
       },
     );
 
-    triggerStep.nextStep(functionStep).nextStep(actionStep);
+    triggerStep.nextStep(mockPayloadStep).nextStep(actionStep);
 
     /**
      * Pass all steps used in the workflow to the `.register()`
      * function. The keys used in this function must remain stable.
      */
-    return this.register({ triggerStep, functionStep, actionStep });
+    return this.register({ triggerStep, mockPayloadStep, actionStep });
   }
 
   /**

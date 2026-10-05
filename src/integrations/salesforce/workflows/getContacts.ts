@@ -50,7 +50,7 @@ export default class extends Workflow<
       timezone: 'America/Los_Angeles',
     });
 
-    const getContactStep = integration.actions.searchRecords(
+    const getContactStep = integration.actions.searchRecordsV2(
       { recordType: 'Contact', filterFormula: undefined },
       {
         autoRetry: false,
