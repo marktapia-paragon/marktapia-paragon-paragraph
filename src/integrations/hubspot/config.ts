@@ -1,7 +1,7 @@
 import { IIntegrationConfig } from '@useparagon/core/integration';
 
-import { default as NewWorkflow_1 } from './workflows/newWorkflow_1';
 import { default as NewWorkflow } from './workflows/newWorkflow';
+import { default as NewWorkflow_1 } from './workflows/newWorkflow_1';
 import { default as TestCompanyCreated } from './workflows/testCompanyCreated';
 import { default as TestHubspotWebhook } from './workflows/testHubspotWebhook';
 import { default as TestJsonPayload } from './workflows/testJsonPayload';
@@ -22,8 +22,8 @@ Our HubSpot integration enables you to:
 • Receive updates when new records are created in HubSpot`,
   showWatermark: false,
   workflowDisplayOrder: [
-    NewWorkflow_1,
     NewWorkflow,
+    NewWorkflow_1,
     TestCompanyCreated,
     TestHubspotWebhook,
     TestJsonPayload,

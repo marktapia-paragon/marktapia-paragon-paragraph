@@ -43,7 +43,8 @@ export default class extends ManualWebhookTrigger<
    * we need a way to map payload data to paragon connected user
    */
   mapPayload = {
-    providerId: (context: IProviderIdContext) => ``,
+    providerId: (context: IProviderIdContext) =>
+      `${context.webhookRequest.body.eventNotifications['0'].realmId}`,
   };
 
   /**
@@ -68,7 +69,14 @@ export default class extends ManualWebhookTrigger<
     context: IPayloadValidationContext<InputResultMap>,
   ): TriggerPayloadValidationOption {
     return {
-      scheme: 'NONE',
+      scheme: 'CUSTOM',
+      parameters: { webhookSecret: `1cb3dc74-0ba4-4aa6-a796-259d56557046` },
+      code: function yourHMACfunction(parameters, libraries, request) {
+        return libraries.crypto
+          .createHmac('sha256', parameters.webhookSecret)
+          .update(JSON.stringify(request.body))
+          .digest();
+      },
     };
   }
 }
