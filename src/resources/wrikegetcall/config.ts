@@ -26,7 +26,7 @@ export default class extends UserLevelAPIResource {
    */
   getRequestConfig(context: IResourceContext): UserLevelResourceRequestConfig {
     return {
-      apiBaseUrl: `https://login.wrike.com/oauth2/authorize/v4`,
+      apiBaseUrl: `https://app-us2.wrike.com/api/v4/`,
       authentication: { type: 'bearer', token: `${context.oauthAccessToken}` },
     };
   }
@@ -38,7 +38,7 @@ export default class extends UserLevelAPIResource {
     context: IResourceContext,
   ): UserLevelResourceTestRequestConfig {
     return {
-      url: `access_roles`,
+      url: `contacts?me=true`,
       method: 'GET',
       params: {},
       headers: {},
