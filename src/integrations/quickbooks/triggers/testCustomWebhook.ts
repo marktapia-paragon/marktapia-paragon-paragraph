@@ -11,7 +11,7 @@ import { InputResultMap } from '@useparagon/integrations/quickbooks';
 import sharedInputs from '../inputs';
 
 /**
- * "New Custom Webhook" custom trigger
+ * "Test Custom Webhook" custom trigger
  */
 export default class extends ManualWebhookTrigger<
   'APP',
@@ -31,7 +31,7 @@ export default class extends ManualWebhookTrigger<
   /**
    * The name of the custom trigger
    */
-  name = 'New Custom Webhook';
+  name = 'Test Custom Webhook';
 
   /**
    * The description of custom trigger

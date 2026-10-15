@@ -1,6 +1,7 @@
 import { IIntegrationConfig } from '@useparagon/core/integration';
 
 import { default as NewWorkflow } from './workflows/newWorkflow';
+import { default as NewWorkflow_1 } from './workflows/newWorkflow_1';
 
 /**
  * configuration for a quickbooks
@@ -17,7 +18,7 @@ Our QuickBooks integration enables you to:
 • Sync customers, payments, or invoices from QuickBooks  
 • Receive updates when payments are made in QuickBooks`,
   showWatermark: false,
-  workflowDisplayOrder: [NewWorkflow],
+  workflowDisplayOrder: [NewWorkflow, NewWorkflow_1],
 };
 
 export default config;

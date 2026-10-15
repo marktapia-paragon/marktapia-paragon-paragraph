@@ -45,7 +45,7 @@ export default class extends Workflow<
     context: IContext<InputResultMap>,
     connectUser: IConnectUser<IPersona<typeof personaMeta>>,
   ) {
-    const triggerStep = new UnselectedStep();
+    const triggerStep = undefined;
 
     triggerStep;
 
@@ -101,5 +101,5 @@ export default class extends Workflow<
   /**
    * This property is maintained by Paragon. Do not edit this property.
    */
-  readonly id: string = 'c50a8592-7c43-4de5-8dc4-e1a733c49bfb';
+  readonly id: string = '2cfc365f-2d6c-4a92-a907-2b7b87187bf8';
 }
