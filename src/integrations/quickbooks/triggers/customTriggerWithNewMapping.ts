@@ -1,86 +1,51 @@
 import {
-  ApiEndpointWebhookTrigger,
-  ICreateTriggerContext,
-  ITeardownTriggerContext,
-  ICreateTriggerSetup,
-  ITeardownTriggerSetup,
+  ManualWebhookTrigger,
   CustomTriggerSetupResponse,
   TriggerPayloadValidationOption,
   ISetupTriggerResponseContext,
   IPayloadValidationContext,
-  IProfileConfigContext,
   IProviderIdContext,
+  IProfileConfigContext,
 } from '@useparagon/core/triggers/customTrigger';
 import { InputResultMap } from '@useparagon/integrations/quickbooks';
 import sharedInputs from '../inputs';
 
 /**
- * "New Custom Webhook" custom trigger
+ * "Custom Trigger with New Mapping" custom trigger
  */
-export default class extends ApiEndpointWebhookTrigger<
-  'USER',
+export default class extends ManualWebhookTrigger<
+  'APP',
   'default',
   InputResultMap
 > {
   /**
    * This property is maintained by Paragon. Do not edit this property.
    */
-  readonly id = 'ed0bba0f-0e1a-46e3-a3b7-13d7814955f5';
+  readonly id = 'e7af5570-d778-4928-b1cc-179f12cb9e80';
 
   /**
    * define whether trigger is app level or user level
    */
-  readonly triggerLevel = 'USER';
+  readonly triggerLevel = 'APP';
 
   /**
    * The name of the custom trigger
    */
-  name = 'New Custom Webhook';
+  name = 'Custom Trigger with New Mapping';
 
   /**
    * The description of custom trigger
    */
-  description = 'Trigger from any event supported by quickbooks';
+  description = 'Trigger from any event supported by QuickBooks';
 
   /**
    * for app level trigger,
    * we need a way to map payload data to paragon connected user
    */
-  mapPayload = undefined;
-
-  /**
-   * describe setup configuration of custom trigger
-   * @param context
-   * @returns
-   */
-  create(context: ICreateTriggerContext<InputResultMap>): ICreateTriggerSetup {
-    return {
-      method: 'POST',
-      url: ``,
-      bodyType: 'json',
-      body: {},
-      params: {},
-      headers: {},
-    };
-  }
-
-  /**
-   * describe teardown configuration of custom trigger
-   * @param context
-   * @returns
-   */
-  teardown(
-    context: ITeardownTriggerContext<InputResultMap>,
-  ): ITeardownTriggerSetup {
-    return {
-      method: 'DELETE',
-      url: ``,
-      bodyType: 'json',
-      body: {},
-      params: {},
-      headers: {},
-    };
-  }
+  mapPayload = {
+    providerId: (context: IProviderIdContext) =>
+      `${context.webhookRequest.body.eventNotifications['0'].realmId}`,
+  };
 
   /**
    * setup response
